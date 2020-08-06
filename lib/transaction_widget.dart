@@ -10,29 +10,49 @@ class TransactionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.amber,
       margin: EdgeInsets.all(3),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.purple,
+                width: 3,
+              ),
+            ),
+            padding: EdgeInsets.all(3),
+            margin: EdgeInsets.fromLTRB(3, 3, 10, 3),
             child: Text(
               this.transaction.amount.toString(),
-              style: TextStyle(fontSize: 24),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: Colors.purple,
+              ),
             ),
           ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                this.transaction.title,
-                style: TextStyle(fontSize: 24),
-              ),
-              Text(
-                this.transaction.date.toLocal().toString(),
-                style: TextStyle(fontSize: 24),
-              ),
-            ],
+          Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  this.transaction.title,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.amber),
+                ),
+                Text(
+                  this.transaction.date.toLocal().toString(),
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),
