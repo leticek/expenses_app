@@ -25,25 +25,25 @@ class MyExpensesHome extends StatelessWidget {
     Transaction(
       id: 't1',
       title: 'New Shoes',
-      amount: 75,
+      price: 75,
       date: DateTime.now(),
     ),
     Transaction(
       id: 't2',
       title: 'New Shirt',
-      amount: 25,
+      price: 25,
       date: DateTime.now(),
     ),
     Transaction(
       id: 't3',
       title: 'New Jeans',
-      amount: 55,
+      price: 55,
       date: DateTime.now(),
     ),
     Transaction(
       id: 't4',
       title: 'New Jacket',
-      amount: 85,
+      price: 85,
       date: DateTime.now(),
     ),
   ];
@@ -55,7 +55,7 @@ class MyExpensesHome extends StatelessWidget {
         title: Text('My Expenses App'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
@@ -63,6 +63,32 @@ class MyExpensesHome extends StatelessWidget {
               child: Text('GRAPH'),
             ),
             color: Colors.red,
+          ),
+          Card(
+            margin: EdgeInsets.all(5),
+            elevation: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Title',
+                  ),
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Amount',
+                  ),
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 5),
+                  child: RaisedButton(
+                    child: Text('Add Transaction'),
+                    onPressed: () => {},
+                  ),
+                )
+              ],
+            ),
           ),
           Column(
             children: transactionList.map((ts) {

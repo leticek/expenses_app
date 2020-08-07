@@ -3,13 +3,13 @@ import 'package:flutter/foundation.dart'; // @required decorator is implemted in
 class Transaction {
   final String id;
   final String title;
-  final double amount;
+  final double price;
   final DateTime date;
 
   Transaction({
     @required this.id,
     @required this.title,
-    @required this.amount,
+    @required this.price,
     @required this.date,
   });
 }
