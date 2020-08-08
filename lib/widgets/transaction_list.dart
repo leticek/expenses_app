@@ -35,7 +35,6 @@ class TransactionList extends StatelessWidget {
               )
             : ListView.builder(
                 itemBuilder: (ctx, index) {
-                  print('build list');
                   return TransactionWidget(
                     transaction: transactionList.elementAt(index),
                   );
