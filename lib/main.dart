@@ -1,78 +1,64 @@
 import 'package:flutter/material.dart';
 
-import './models/transaction.dart';
 import './widgets/new_transaction.dart';
 import './widgets/transaction_list.dart';
+import './models/transaction.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      home: MyExpensesHome(),
+      title: 'Flutter App',
+      home: MyHomePage(),
     );
   }
 }
 
-class MyExpensesHome extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
+  // String titleInput;
+  // String amountInput;
   @override
-  _MyExpensesHomeState createState() => _MyExpensesHomeState();
+  _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyExpensesHomeState extends State<MyExpensesHome> {
-  final List<Transaction> _transactionList = [
+class _MyHomePageState extends State<MyHomePage> {
+  final List<Transaction> _userTransactions = [
     Transaction(
       id: 't1',
       title: 'New Shoes',
-      price: 75,
+      amount: 69.99,
       date: DateTime.now(),
     ),
     Transaction(
       id: 't2',
-      title: 'New Shirt',
-      price: 25,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'New Jeans',
-      price: 55,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't4',
-      title: 'New Jacket',
-      price: 85,
+      title: 'Weekly Groceries',
+      amount: 16.53,
       date: DateTime.now(),
     ),
   ];
 
-  void _addTransaction({String tTitle, double tAmount}) {
-    final t = Transaction(
-      id: DateTime.now().toString(),
-      title: tTitle,
-      price: tAmount,
+  void _addNewTransaction(String txTitle, double txAmount) {
+    final newTx = Transaction(
+      title: txTitle,
+      amount: txAmount,
       date: DateTime.now(),
+      id: DateTime.now().toString(),
     );
 
     setState(() {
-      _transactionList.add(t);
+      _userTransactions.add(newTx);
     });
   }
 
-  void startNewTransaction(BuildContext ctx) {
+  void _startAddNewTransaction(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
       builder: (_) {
         return GestureDetector(
           onTap: () {},
-          child: NewTransaction(
-            buttonHandler: this._addTransaction,
-          ),
+          child: NewTransaction(_addNewTransaction),
           behavior: HitTestBehavior.opaque,
         );
       },
@@ -83,35 +69,35 @@ class _MyExpensesHomeState extends State<MyExpensesHome> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Expenses App'),
+        title: Text('Flutter App'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () => startNewTransaction(context),
-          )
+            onPressed: () => _startAddNewTransaction(context),
+          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
-        onPressed: () => startNewTransaction(context),
-      ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterFloat,
       body: SingleChildScrollView(
         child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             Container(
+              width: double.infinity,
               child: Card(
-                child: Text('GRAPH'),
+                color: Colors.blue,
+                child: Text('CHART!'),
+                elevation: 5,
               ),
-              color: Colors.red,
             ),
-            TransactionList(
-              transactionList: this._transactionList,
-            ),
+            TransactionList(_userTransactions),
           ],
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.add),
+        onPressed: () => _startAddNewTransaction(context),
       ),
     );
   }
