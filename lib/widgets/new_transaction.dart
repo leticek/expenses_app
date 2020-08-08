@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class NewTransaction extends StatelessWidget {
-  final Function addTx;
   final titleController = TextEditingController();
   final amountController = TextEditingController();
+  final Function buttonHandler;
 
-  NewTransaction(this.addTx);
+  NewTransaction({this.buttonHandler});
 
   void submitData() {
     final enteredTitle = titleController.text;
@@ -15,44 +15,53 @@ class NewTransaction extends StatelessWidget {
       return;
     }
 
-    addTx(
-      enteredTitle,
-      enteredAmount,
+    this.buttonHandler(
+      tTitle: enteredTitle,
+      tAmount: enteredAmount,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-              decoration: InputDecoration(labelText: 'Title'),
-              controller: titleController,
-              onSubmitted: (_) => submitData(),
-              // onChanged: (val) {
-              //   titleInput = val;
-              // },
-            ),
-            TextField(
-              decoration: InputDecoration(labelText: 'Amount'),
-              controller: amountController,
-              keyboardType: TextInputType.number,
-              onSubmitted: (_) => submitData(),
-              // onChanged: (val) => amountInput = val,
-            ),
-            FlatButton(
-              child: Text('Add Transaction'),
-              textColor: Colors.purple,
-              onPressed: submitData,
-            ),
-          ],
+    return Column(
+      children: <Widget>[
+        Card(
+          margin: EdgeInsets.all(5),
+          elevation: 5,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Title',
+                ),
+                controller: titleController,
+                onSubmitted: (_) => submitData(),
+              ),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: 'Amount',
+                ),
+                controller: amountController,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                onSubmitted: (_) => submitData(),
+              ),
+              Container(
+                margin: EdgeInsets.only(right: 5),
+                child: FlatButton(
+                  child: Text(
+                    'Add Transaction',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  onPressed: () => submitData(),
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
