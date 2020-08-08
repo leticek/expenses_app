@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      theme: ThemeData(primarySwatch: Colors.teal),
       home: MyExpensesHome(),
     );
   }
@@ -25,30 +26,30 @@ class MyExpensesHome extends StatefulWidget {
 
 class _MyExpensesHomeState extends State<MyExpensesHome> {
   final List<Transaction> _transactionList = [
-    Transaction(
-      id: 't1',
-      title: 'New Shoes',
-      price: 75,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't2',
-      title: 'New Shirt',
-      price: 25,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't3',
-      title: 'New Jeans',
-      price: 55,
-      date: DateTime.now(),
-    ),
-    Transaction(
-      id: 't4',
-      title: 'New Jacket',
-      price: 85,
-      date: DateTime.now(),
-    ),
+    // Transaction(
+    //   id: 't1',
+    //   title: 'New Shoes',
+    //   price: 75,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't2',
+    //   title: 'New Shirt',
+    //   price: 25,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't3',
+    //   title: 'New Jeans',
+    //   price: 55,
+    //   date: DateTime.now(),
+    // ),
+    // Transaction(
+    //   id: 't4',
+    //   title: 'New Jacket',
+    //   price: 85,
+    //   date: DateTime.now(),
+    // ),
   ];
 
   void _addTransaction({String tTitle, double tAmount}) {
@@ -105,7 +106,6 @@ class _MyExpensesHomeState extends State<MyExpensesHome> {
               child: Card(
                 child: Text('GRAPH'),
               ),
-              color: Colors.red,
             ),
             TransactionList(
               transactionList: this._transactionList,

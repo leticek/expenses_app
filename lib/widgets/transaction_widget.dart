@@ -18,7 +18,6 @@ class TransactionWidget extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               border: Border.all(
-                color: Colors.purple,
                 width: 3,
               ),
             ),
@@ -29,7 +28,6 @@ class TransactionWidget extends StatelessWidget {
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
-                color: Colors.purple,
               ),
             ),
           ),
@@ -41,15 +39,14 @@ class TransactionWidget extends StatelessWidget {
                 Text(
                   this.transaction.title,
                   style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.amber),
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Text(
                   DateFormat('d.M.yyyy').format(this.transaction.date),
                   style: TextStyle(
                     fontSize: 14,
-                    color: Colors.blueGrey,
                   ),
                 ),
               ],
