@@ -63,12 +63,12 @@ class _MyExpensesHomeState extends State<MyExpensesHome> {
     }).toList();
   }
 
-  void _addTransaction({String tTitle, double tAmount}) {
+  void _addTransaction({String tTitle, double tAmount, DateTime tDate}) {
     final t = Transaction(
       id: DateTime.now().toString(),
       title: tTitle,
       price: tAmount,
-      date: DateTime.now(),
+      date: tDate,
     );
 
     setState(() {
@@ -89,6 +89,12 @@ class _MyExpensesHomeState extends State<MyExpensesHome> {
         );
       },
     );
+  }
+
+  void deleteTransaction(String id) {
+    setState(() {
+      this._transactionList.removeWhere((element) => element.id == id);
+    });
   }
 
   @override
@@ -116,6 +122,7 @@ class _MyExpensesHomeState extends State<MyExpensesHome> {
             Chart(transactions: this._recentTransactions),
             TransactionList(
               transactionList: this._transactionList,
+              delTransactionFn: this.deleteTransaction,
             ),
           ],
         ),

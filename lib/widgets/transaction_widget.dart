@@ -5,15 +5,16 @@ import '../models/transaction.dart';
 
 class TransactionWidget extends StatelessWidget {
   final Transaction transaction;
+  final Function delTransaction;
 
-  TransactionWidget({this.transaction});
+  TransactionWidget({this.transaction, this.delTransaction});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(3),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
@@ -51,7 +52,10 @@ class TransactionWidget extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
+          IconButton(
+              icon: Icon(Icons.delete),
+              onPressed: () => this.delTransaction(this.transaction.id))
         ],
       ),
     );
