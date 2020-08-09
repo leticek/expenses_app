@@ -13,51 +13,60 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 16,
-          child: FittedBox(
-            child: Text(
-              '$amount Kč',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Container(
-          height: 60,
-          width: 10,
-          child: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1.8,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  borderRadius: BorderRadius.circular(5),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          children: [
+            Container(
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(
+                child: Text(
+                  '$amount Kč',
+                  style: TextStyle(fontSize: 16),
                 ),
               ),
-              FractionallySizedBox(
-                heightFactor: 1 - this.prctAmount,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(5),
+            ),
+            SizedBox(
+              height: constraints.maxHeight * 0.05,
+            ),
+            Container(
+              height: constraints.maxHeight * 0.6,
+              width: 10,
+              child: Stack(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 1.8,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
                   ),
-                ),
-              )
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Text('$dayLabel'),
-      ],
+                  FractionallySizedBox(
+                    heightFactor: 1 - this.prctAmount,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: constraints.maxHeight * 0.05,
+            ),
+            Container(
+              height: constraints.maxHeight * 0.15,
+              child: FittedBox(
+                child: Text('$dayLabel'),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

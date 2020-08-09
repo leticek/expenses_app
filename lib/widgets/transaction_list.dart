@@ -13,26 +13,29 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 445,
         child: transactionList.isEmpty
-            ? Column(
-                children: <Widget>[
-                  Text(
-                    'No recent transactions!',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    child: Image.asset('assets/images/waiting.png',
-                        fit: BoxFit.cover),
-                    height: 400,
-                  ),
-                ],
+            ? LayoutBuilder(
+                builder: (context, constraint) {
+                  return Column(
+                    children: <Widget>[
+                      Text(
+                        'No recent transactions!',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Container(
+                        child: Image.asset('assets/images/waiting.png',
+                            fit: BoxFit.cover),
+                        height: constraint.maxHeight * 0.7,
+                      ),
+                    ],
+                  );
+                },
               )
             : ListView.builder(
                 itemBuilder: (ctx, index) {

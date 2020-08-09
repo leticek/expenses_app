@@ -26,31 +26,33 @@ class MyExpensesHome extends StatefulWidget {
 }
 
 class _MyExpensesHomeState extends State<MyExpensesHome> {
+  bool _showChart = false;
+
   final List<Transaction> _transactionList = [
-    // Transaction(
-    //   id: 't1',
-    //   title: 'New Shoes',
-    //   price: 75,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: 'New Shirt',
-    //   price: 25,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't3',
-    //   title: 'New Jeans',
-    //   price: 55,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't4',
-    //   title: 'New Jacket',
-    //   price: 85,
-    //   date: DateTime.now(),
-    // ),
+    Transaction(
+      id: 't1',
+      title: 'New Shoes',
+      price: 75,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: 'New Shirt',
+      price: 25,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't3',
+      title: 'New Jeans',
+      price: 55,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't4',
+      title: 'New Jacket',
+      price: 85,
+      date: DateTime.now(),
+    ),
   ];
 
   List<Transaction> get _recentTransactions {
@@ -99,16 +101,17 @@ class _MyExpensesHomeState extends State<MyExpensesHome> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      title: Text('My Expenses App'),
+      actions: <Widget>[
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: () => startNewTransaction(context),
+        )
+      ],
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Expenses App'),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            onPressed: () => startNewTransaction(context),
-          )
-        ],
-      ),
+      appBar: appBar,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () => startNewTransaction(context),
@@ -119,11 +122,39 @@ class _MyExpensesHomeState extends State<MyExpensesHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Chart(transactions: this._recentTransactions),
-            TransactionList(
-              transactionList: this._transactionList,
-              delTransactionFn: this.deleteTransaction,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Show Chart',
+                  style: TextStyle(fontSize: 16),
+                ),
+                Switch(
+                  value: this._showChart,
+                  onChanged: (val) {
+                    setState(() {
+                      _showChart = val;
+                    });
+                  },
+                )
+              ],
             ),
+            _showChart
+                ? Container(
+                    height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top),
+                    child: Chart(transactions: this._recentTransactions))
+                : Container(
+                    height: (MediaQuery.of(context).size.height -
+                            appBar.preferredSize.height -
+                            MediaQuery.of(context).padding.top) *
+                        0.7,
+                    child: TransactionList(
+                      transactionList: this._transactionList,
+                      delTransactionFn: this.deleteTransaction,
+                    ),
+                  ),
           ],
         ),
       ),
