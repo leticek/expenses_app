@@ -48,65 +48,71 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Card(
-          margin: EdgeInsets.all(5),
-          elevation: 5,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Title',
-                ),
-                controller: _titleController,
-                onSubmitted: (_) => submitData(),
-              ),
-              TextField(
-                decoration: InputDecoration(
-                  labelText: 'Amount',
-                ),
-                controller: _amountController,
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                onSubmitted: (_) => submitData(),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                    child: Text(this._pickedDate == null
-                        ? 'No date chosen!'
-                        : 'Picked date: ${DateFormat.yMd().format(this._pickedDate)}'),
+    return SingleChildScrollView(
+      child: Column(
+        children: <Widget>[
+          Card(
+            margin: EdgeInsets.only(
+                top: 5,
+                right: 5,
+                left: 5,
+                bottom: MediaQuery.of(context).viewInsets.bottom + 5),
+            elevation: 5,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Title',
                   ),
-                  FlatButton(
+                  controller: _titleController,
+                  onSubmitted: (_) => submitData(),
+                ),
+                TextField(
+                  decoration: InputDecoration(
+                    labelText: 'Amount',
+                  ),
+                  controller: _amountController,
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  onSubmitted: (_) => submitData(),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: Text(this._pickedDate == null
+                          ? 'No date chosen!'
+                          : 'Picked date: ${DateFormat.yMd().format(this._pickedDate)}'),
+                    ),
+                    FlatButton(
+                      child: Text(
+                        'Choose a date',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: this.myDatePicker,
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: EdgeInsets.only(right: 5),
+                  child: RaisedButton(
                     child: Text(
-                      'Choose a date',
+                      'Add Transaction',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: this.myDatePicker,
+                    color: Theme.of(context).buttonColor,
+                    onPressed: () => submitData(),
                   ),
-                ],
-              ),
-              Container(
-                margin: EdgeInsets.only(right: 5),
-                child: RaisedButton(
-                  child: Text(
-                    'Add Transaction',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  color: Theme.of(context).buttonColor,
-                  onPressed: () => submitData(),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

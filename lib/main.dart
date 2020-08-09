@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import './models/transaction.dart';
 import './widgets/new_transaction.dart';
@@ -26,7 +27,7 @@ class MyExpensesHome extends StatefulWidget {
 }
 
 class _MyExpensesHomeState extends State<MyExpensesHome> {
-  bool _showChart = false;
+  bool _showChart = true;
 
   final List<Transaction> _transactionList = [
     Transaction(
@@ -101,6 +102,8 @@ class _MyExpensesHomeState extends State<MyExpensesHome> {
 
   @override
   Widget build(BuildContext context) {
+    final isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text('My Expenses App'),
       actions: <Widget>[
@@ -110,6 +113,17 @@ class _MyExpensesHomeState extends State<MyExpensesHome> {
         )
       ],
     );
+    final transList = Container(
+      height: (MediaQuery.of(context).size.height -
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          0.7,
+      child: TransactionList(
+        transactionList: this._transactionList,
+        delTransactionFn: this.deleteTransaction,
+      ),
+    );
+
     return Scaffold(
       appBar: appBar,
       floatingActionButton: FloatingActionButton(
@@ -122,39 +136,40 @@ class _MyExpensesHomeState extends State<MyExpensesHome> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Show Chart',
-                  style: TextStyle(fontSize: 16),
-                ),
-                Switch(
-                  value: this._showChart,
-                  onChanged: (val) {
-                    setState(() {
-                      _showChart = val;
-                    });
-                  },
-                )
-              ],
-            ),
-            _showChart
-                ? Container(
-                    height: (MediaQuery.of(context).size.height -
-                        appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top),
-                    child: Chart(transactions: this._recentTransactions))
-                : Container(
-                    height: (MediaQuery.of(context).size.height -
-                            appBar.preferredSize.height -
-                            MediaQuery.of(context).padding.top) *
-                        0.7,
-                    child: TransactionList(
-                      transactionList: this._transactionList,
-                      delTransactionFn: this.deleteTransaction,
-                    ),
+            if (isLandscape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Show Chart',
+                    style: TextStyle(fontSize: 16),
                   ),
+                  Switch(
+                    value: this._showChart,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    },
+                  )
+                ],
+              ),
+            if (!isLandscape)
+              Container(
+                  height: (MediaQuery.of(context).size.height -
+                          appBar.preferredSize.height -
+                          MediaQuery.of(context).padding.top) *
+                      0.3,
+                  child: Chart(transactions: this._recentTransactions)),
+            if (!isLandscape) transList,
+            if (isLandscape)
+              _showChart
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                          appBar.preferredSize.height -
+                          MediaQuery.of(context).padding.top),
+                      child: Chart(transactions: this._recentTransactions))
+                  : transList
           ],
         ),
       ),
